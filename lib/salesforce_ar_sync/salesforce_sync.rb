@@ -177,12 +177,6 @@ module SalesforceArSync
     def salesforce_create_object(attributes)
       attributes[self.class.salesforce_web_id_attribute_name.to_s] = id if self.class.salesforce_sync_web_id? && !new_record?
       salesforce_id = SF_CLIENT.create!(salesforce_object_name, format_attributes(attributes))
-      if salesforce_id.present? && salesforce_id != 0
-        self.salesforce_id = salesforce_id
-        @exists_in_salesforce = true
-      else
-        raise "Salesforce returned invalid ID: #{salesforce_id}"
-      end
     end
 
     def salesforce_update_object(attributes)
